@@ -4,9 +4,8 @@
 
 import os
 
-#stage = os.environ["STAGE"].upper()
-stage = os.getenv("STAGE", default = 'dev').upper()
-
+# stage = os.environ["STAGE"].upper()
+stage = os.getenv("STAGE", default='dev').upper()
 
 output = f"We're running in {stage}"
 
@@ -16,4 +15,3 @@ elif stage.startswith("DEV"):
     output = "We're running on DEV "
 
 print(output)
-

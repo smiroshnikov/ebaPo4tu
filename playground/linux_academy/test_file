@@ -1,4 +1,4 @@
 another Line at the beginning due to seek(0) as argument
 and another Line right after(below)  first written
-orget newline 5 
+ forget newline 5 
 dont forget newline and close file 

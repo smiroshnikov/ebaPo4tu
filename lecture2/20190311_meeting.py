@@ -84,3 +84,8 @@ d = a
 e = a
 
 print(sys.getrefcount(a))  # number of instance occurrences
+
+
+jsonf = open('test.json','r')
+json_file_c = json.load(jsonf)
+print(json_file_c)

@@ -68,4 +68,19 @@ from decimal import Decimal
 
 r = Decimal(0.3) + Decimal(0.12444)
 print(r)
+from fractions import Fraction
 
+numX = Fraction(3, 8)  # b (3 / 8)
+numY = Fraction(2, 4)  # (1 / 2)
+numZ = numX + numY
+print(numZ)
+
+import sys
+
+a = [1, 2, 34, 5, 6, ]
+b = a
+c = a
+d = a
+e = a
+
+print(sys.getrefcount(a))  # number of instance occurrences

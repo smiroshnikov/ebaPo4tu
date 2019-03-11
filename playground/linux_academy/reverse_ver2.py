@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 """
 missed points 
@@ -20,6 +21,9 @@ try:
     limit = args.limit
 except FileNotFoundError as err:
     print(f"Error {err}")
+    sys.exit(1)  # useful for investigating later on
+    # classic check when writing multi level system scripts is to check that  echo $? is Non zero
+    # the number is meaningless most of the time
 else:
     with open(args.filename) as f:
         # here we will try/catch/except
@@ -33,4 +37,5 @@ else:
             print(line.strip()[::-1])  # the backward part is here !
             print(line.strip())
 # finally:
-#     print("Thanks for using this utility , dont forget to donate ")
+#     print("Thanks for using this utility , dont forget to donate , finally was not necessary at all in here ")
+# echo $? - displays latest error status . will be changed by sys.exit

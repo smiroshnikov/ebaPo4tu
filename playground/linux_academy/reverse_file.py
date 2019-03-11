@@ -33,6 +33,6 @@ with open(args.filename) as f:
         # print(lines[len(lines) - int(lines[line])])
 
 # Accessing index in for loop
-# ls = ['a', 'b', 'c']
-# for idx, val in enumerate(ls):
-#     print(idx, type(idx))
+ls = ['a', 'b', 'c']
+for idx, val in enumerate(ls):
+    print(idx, type(idx))

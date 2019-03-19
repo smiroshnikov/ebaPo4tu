@@ -35,7 +35,6 @@ def while_mutip(final=10):
 print("=====================================")
 while_mutip(10)
 
-
 while True:
     if True:
         print("Oh no break !")

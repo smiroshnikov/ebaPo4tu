@@ -11,7 +11,7 @@ if os.name == 'nt':
     # print(new_proc)  # CalledProcessError can be caught and handled
     except subprocess.CalledProcessError as err:
         print(f"Ahtung !  {err}")
-        print("Make sure that command used exists on current OS ! ")
+        print('Make sure that command used exists on current OS ! ')
         # sys.exit(1)
 
 else:

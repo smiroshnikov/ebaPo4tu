@@ -4,6 +4,7 @@ import re
 import sys
 import glob
 import shutil
+import math
 
 CURRENT_PATH = (os.path.dirname(os.path.abspath('process_receipts.py')))
 ADSKIYSUKAYOBANIYPIZDETZ = 'dir new /b | findstr /i "receipt-[1-3]*.json"'
@@ -41,4 +42,5 @@ for path in receipts:
     source_PATH = (os.path.dirname(os.path.abspath('process_receipts.py')) + "\\new")
     shutil.move(source_PATH+"\\"+filename, destination_PATH+"\\"+filename)
 
-print(f"Total value in receipts counted so far is : {subtotal}")
+print(f"Total value in receipts counted so far is : ${round(subtotal,2)}")
+

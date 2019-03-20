@@ -11,7 +11,7 @@ data_folder_w = "C://Users//Sergeim//IdeaProjects//ebaPo4tuPython/playground//li
 os.environ["FILE_COUNT"] = str(50)
 
 count = int(os.getenv("FILE_COUNT") or 100)
-words = [word.strip("'") for word in open(FILENAME).readlines()]
+words = [word.strip("'") for word in open(FILENAME_W).readlines()]
 
 for id in range(count):
     amount = random.uniform(1.0, 1000.0)
@@ -23,5 +23,5 @@ for id in range(count):
                                                    string.digits, k=random.randint(1, 5000))),
         'meaningless_ID': ''.join(random.choices(string.digits, k=random.randint(10, 15)))
     }
-    with open(f"{data_folder}//receipt-{id}.json", 'w') as f:
+    with open(f"{data_folder_w}//receipt-{id}.json", 'w') as f:
         json.dump(content, f)

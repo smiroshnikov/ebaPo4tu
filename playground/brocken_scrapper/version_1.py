@@ -1,4 +1,5 @@
 import multiprocessing
+import time
 import urllib
 from multiprocessing.pool import Pool
 
@@ -9,21 +10,47 @@ import re
 from threading import Thread
 
 
+def burning_hatred_for_regex(url):
+    import re
+    regex = re.compile(
+        r'^https?://'  # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
+        r'localhost|'  # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+        r'(?::\d+)?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    return url is not None and regex.search(url)
+
+
+def regex_link(url):
+    """
+
+    :param url: can be any string containing any number of URLs
+    :return:  list of str representing url
+    :return:  list of str representing url
+    """
+    # pattern = '(https?:[^>]*)\"'
+    pattern = "(https?:[^>]*)\'"
+    p = re.compile(pattern)
+    url = p.findall(url)
+    return url
+
+
 def check_link_status(link):
-    bad_links = []
     try:
         req = urllib.request.Request(url=link)
         resp = urllib.request.urlopen(req, timeout=4)
-
+        print(f"checking link.... {link} status : {resp.status}")
         if resp.status in [400, 404, 403, 408, 409, 501, 502, 503]:
             print(f"ERROR : ! Link is broken {resp.status} - {resp.reason} --> {link}")
-            bad_links.append(link)
+            return False
 
-        print(f"checking link.... {link} status : {resp.status}")
     except Exception as e:
         print(f"ERROR -->{e}")
-    finally:
-        return bad_links
+        return False
+    else:
+        return True
+
 
 
 def create_href_list():
@@ -32,15 +59,10 @@ def create_href_list():
     soup = BeautifulSoup(page_content, features="html.parser")
     links = []
 
-    for link_tag in soup.find_all('a'):
-        clean_url = re.findall('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', str(link_tag))
-        if type(clean_url) is list:
-            for entry in clean_url:
-                print(f"link found {entry}!")
-                links.append(entry)
-        else:
-            print(f"link found {clean_url}!")
-            links.append(clean_url)
+    for ix, link_tag in enumerate(soup.find_all('a', href=True)):
+        if "http" in link_tag['href']:
+            # print(f"link is {link_tag['href']} count : {ix}")
+            links.append(link_tag['href'])
 
     return links
 
@@ -53,13 +75,14 @@ def run_checker(links):
 # run_checker(links)
 
 if __name__ == '__main__':
-    import timeit
+    start = time.time()
 
-    l = create_href_list()
-    print(len(l))
-    print(type(l[0]))
+    link_list = create_href_list()
+    end = time.time()
+    print(f"tool {start - end}")
+    for l in link_list:
+        print(check_link_status(l))
+    end = time.time()
+    print(f"tool {start - end}")
 
-    # full_link_list = create_href_list()
-    # print(len(full_link_list))
-    # print(timeit.timeit("test()", setup="from __main__ import test"))
-    # print(timeit.timeit("create_href_list()", setup="from __main__ import create_href_list"))
+

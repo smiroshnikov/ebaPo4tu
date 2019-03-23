@@ -20,7 +20,7 @@ print(cars['84-185-33'])
 # what is set ? set is a collection of UNIQUE objects
 # frozenset is immutable
 
-numbers = {34, 54, 6, 75, 654, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}  # definition if a set NOT A DICT !
+numbers = {34, 54, 6, 75, 654, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}  # definition of a set NOT A DICT !
 print(numbers, type(numbers))
 print(dir(numbers))
 

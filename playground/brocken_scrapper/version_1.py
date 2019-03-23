@@ -1,13 +1,9 @@
-import multiprocessing
 import time
 import urllib
-from multiprocessing.pool import Pool
-
-import urllib3
+import multiprocessing
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import re
-from threading import Thread
 
 
 def burning_hatred_for_regex(url):
@@ -52,8 +48,29 @@ def check_link_status(link):
         return True
 
 
+def create_unique_links_set():
+    """
 
-def create_href_list():
+    :return: collection of UNIQUE links located in page object
+    """
+    request = Request("https://www.guardicore.com/")
+    page_content = urlopen(request)
+    soup = BeautifulSoup(page_content, features="html.parser")
+    links = set()
+
+    for ix, link_tag in enumerate(soup.find_all('a', href=True)):
+        if "http" in link_tag['href']:
+            # print(f"link is {link_tag['href']} count : {ix}")
+            links.add(link_tag['href'])
+
+    return links
+
+
+def create_links_list():
+    """
+
+    :return: collection of ALL links located in page object
+    """
     request = Request("https://www.guardicore.com/")
     page_content = urlopen(request)
     soup = BeautifulSoup(page_content, features="html.parser")
@@ -67,22 +84,23 @@ def create_href_list():
     return links
 
 
-def run_checker(links):
+def execute_checker(links):
+    good_links_set = set()
+    bad_links_set = set()
+
     for link in links:
-        check_link_status(link)
+        if check_link_status(link):
+            good_links_set.add(link)
+        else:
+            bad_links_set.add(link)
+    return good_links_set, bad_links_set
 
-
-# run_checker(links)
 
 if __name__ == '__main__':
     start = time.time()
+    link_set = create_unique_links_set()
+    gl, bl = execute_checker(link_set)
 
-    link_list = create_href_list()
+    print(f"{len(gl)} <---unique good links ,unique bad links --->{len(bl)}")
     end = time.time()
-    print(f"tool {start - end}")
-    for l in link_list:
-        print(check_link_status(l))
-    end = time.time()
-    print(f"tool {start - end}")
-
-
+    print(f"tool {end - start}")

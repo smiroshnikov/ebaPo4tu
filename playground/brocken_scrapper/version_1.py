@@ -1,6 +1,6 @@
 import time
 import urllib
-import multiprocessing
+import multiprocessing as mp
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import re
@@ -102,5 +102,12 @@ if __name__ == '__main__':
     gl, bl = execute_checker(link_set)
 
     print(f"{len(gl)} <---unique good links ,unique bad links --->{len(bl)}")
+
+    with open('bad_links.txt', 'w') as f:
+        for l in bl:
+            f.writelines(l+"\n")
+
     end = time.time()
-    print(f"tool {end - start}")
+    # print(f"tool {end - start}")
+    # for l in bl:
+    #     print(f"{l} those are bad links ")

@@ -73,10 +73,10 @@ def execute_checker(links):
 
 
 def main():
-
     link_set = create_unique_links_set()
-    pool = ThreadPool(processes=16)
+    pool = ThreadPool(processes=4)
     gl, bl = pool.apply(execute_checker, args=(link_set,))
+    # gl, bl = pool.apply_async(execute_checker, args=(link_set,))
 
     pool.close()
     pool.join()
@@ -91,3 +91,4 @@ def main():
 if __name__ == '__main__':
     main()
 "http://qaru.site/questions/37986/how-to-get-the-return-value-from-a-thread-in-python"
+" use celery"

@@ -1,46 +1,22 @@
-import time
 import urllib
-import multiprocessing as mp
+from multiprocessing.pool import ThreadPool
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
-import re
-
-
-def burning_hatred_for_regex(url):
-    import re
-    regex = re.compile(
-        r'^https?://'  # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
-        r'localhost|'  # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-        r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-    return url is not None and regex.search(url)
-
-
-def regex_link(url):
-    """
-
-    :param url: can be any string containing any number of URLs
-    :return:  list of str representing url
-    :return:  list of str representing url
-    """
-    # pattern = '(https?:[^>]*)\"'
-    pattern = "(https?:[^>]*)\'"
-    p = re.compile(pattern)
-    url = p.findall(url)
-    return url
 
 
 def check_link_status(link):
+    """
+
+    :param link: URL  string to be checked
+    :return: boolean  reflecting link state
+    """
     try:
         req = urllib.request.Request(url=link)
         resp = urllib.request.urlopen(req, timeout=4)
         print(f"checking link.... {link} status : {resp.status}")
-        if resp.status in [400, 404, 403, 408, 409, 501, 502, 503]:
-            print(f"ERROR : ! Link is broken {resp.status} - {resp.reason} --> {link}")
-            return False
-
+        # if resp.status in [400, 404, 403, 408, 409, 501, 502, 503]:
+        #     print(f"ERROR : ! Link is broken {resp.status} - {resp.reason} --> {link}")
+        #     return False
     except Exception as e:
         print(f"ERROR -->{e}")
         return False
@@ -96,18 +72,22 @@ def execute_checker(links):
     return good_links_set, bad_links_set
 
 
-if __name__ == '__main__':
-    start = time.time()
+def main():
+
     link_set = create_unique_links_set()
-    gl, bl = execute_checker(link_set)
+    pool = ThreadPool(processes=16)
+    gl, bl = pool.apply(execute_checker, args=(link_set,))
+
+    pool.close()
+    pool.join()
 
     print(f"{len(gl)} <---unique good links ,unique bad links --->{len(bl)}")
 
     with open('bad_links.txt', 'w') as f:
         for l in bl:
-            f.writelines(l+"\n")
+            f.writelines(l + "\n")
 
-    end = time.time()
-    # print(f"tool {end - start}")
-    # for l in bl:
-    #     print(f"{l} those are bad links ")
+
+if __name__ == '__main__':
+    main()
+"http://qaru.site/questions/37986/how-to-get-the-return-value-from-a-thread-in-python"

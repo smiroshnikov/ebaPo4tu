@@ -116,3 +116,4 @@ print([n for n in numbers2])
 
 list = [1,2,3,4,4]
 del list
+#function is an object

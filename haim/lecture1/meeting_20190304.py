@@ -1,4 +1,4 @@
-from lecture1.calculationBrain import megascukofunction as msc
+from haim.lecture1.calculationBrain import megascukofunction as msc
 
 import sys
 

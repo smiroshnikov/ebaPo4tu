@@ -45,3 +45,74 @@ for (*a, b, c) in l:
     print(f"a is {a} getting ALL BESIDES 2 last  ")
     print(f"b is {b} b receives one BEFORE LAST ")
     print(f"c is {c} getting LAST")
+
+
+def multiplication_table(limit=10):
+    for x in range(1, limit + 1):
+        for y in range(1, limit + 1):
+            print(f"{x}*{y}="
+                  f"{x * y}", end='\t')
+        print("\n")
+
+
+multiplication_table(20)
+# cool
+with open('meeting_22_03_2019.py', 'r') as f:
+    for line in f:
+        print(line.strip(), end="")
+
+print(end="\n")
+print([n * n for n in [1, 2, 3, 4, 5, 5] if n % 2 == 0])
+
+vec_a = [1, 2, 3, 4, 5]
+vec_b = [5, 4, 3, 2, 1]
+vec_c = [11, 12, 13, 14, 15]
+
+print([x * y * z for x in vec_a for y in vec_b for z in vec_c])
+
+
+# map function
+
+def f(n):
+    return n * 7
+
+
+nl = map(f, [1, 2, 3, 4, 5, 6, 7])
+print([v for v in nl])
+
+names = {'dave', 'bob', 'muki', 'kuki', 'xiiii'}
+
+
+def get_len(name):
+    return len(name)
+
+
+nll = map(get_len, names)  # PAY ATTENTION name only without ()
+print([n for n in nll])
+
+# zip function combines stuff
+countries = ['il', 'sw', 'ita', 'cad']
+capitals = ['jer', 'bern', 'milano', 'tor']
+currencies = ['nis', 'fra', 'eur', 'cad']
+
+# print([triple_value for triple_value in zip(countries, capitals,currencies)])
+print([(a, b, c) for a, b, c in zip(countries, capitals, currencies)])
+data1 = [(a, b, c) for a, b, c in zip(countries, capitals, currencies)]
+print(f"{data1} LIST OF TUPLES ")
+data2 = map(list, data1)
+print(f"{[v for v in data2]} now lists ")
+
+
+def f2(n):
+    if 50 < n < 100:
+        return True
+
+
+numbers1 = [12, 12, 123, 231, 21, 45, 2232, 456, 5667, 899, 567, 345, 6567, 89, 90, 4433, -992345]
+
+numbers2 = filter(f2, numbers1)
+print([n for n in numbers2])
+
+
+list = [1,2,3,4,4]
+del list

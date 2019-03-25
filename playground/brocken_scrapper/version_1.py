@@ -1,3 +1,4 @@
+import queue
 import urllib
 from multiprocessing.pool import ThreadPool
 from bs4 import BeautifulSoup
@@ -14,14 +15,12 @@ def check_link_status(link):
         req = urllib.request.Request(url=link)
         resp = urllib.request.urlopen(req, timeout=4)
         print(f"checking link.... {link} status : {resp.status}")
-        # if resp.status in [400, 404, 403, 408, 409, 501, 502, 503]:
-        #     print(f"ERROR : ! Link is broken {resp.status} - {resp.reason} --> {link}")
-        #     return False
+
     except Exception as e:
-        print(f"ERROR -->{e}")
-        return False
+        print(f"PROBLEM WITH LINK  -->{e}")
+        return False, link
     else:
-        return True
+        return True, link
 
 
 def create_unique_links_set():
@@ -30,13 +29,15 @@ def create_unique_links_set():
     :return: collection of UNIQUE links located in page object
     """
     request = Request("https://www.guardicore.com/")
+    # request = Request("https://www.youporn.com/")
+    # test website , guardicore was having SSL issues this morning
     page_content = urlopen(request)
     soup = BeautifulSoup(page_content, features="html.parser")
     links = set()
 
     for ix, link_tag in enumerate(soup.find_all('a', href=True)):
         if "http" in link_tag['href']:
-            # print(f"link is {link_tag['href']} count : {ix}")
+            print(f"DEBUG : link is {link_tag['href']} count : {ix}")
             links.add(link_tag['href'])
 
     return links
@@ -60,12 +61,33 @@ def create_links_list():
     return links
 
 
-def execute_checker(links):
+def execute_checker_parallel(links):
+    good_links_set = set()
+    bad_links_set = set()
+
+    p = ThreadPool(processes=4)
+
+    def my_callback(*result):
+
+        good, link = result[0]
+
+        if good:
+            good_links_set.add(link)
+        else:
+            bad_links_set.add(link)
+
+    for link in links:
+        p.apply_async(check_link_status, args=(link,), callback=my_callback)
+
+    return good_links_set, bad_links_set
+
+
+def execute_checker_non_parallel(links):
     good_links_set = set()
     bad_links_set = set()
 
     for link in links:
-        if check_link_status(link):
+        if check_link_status(link)[0]:
             good_links_set.add(link)
         else:
             bad_links_set.add(link)
@@ -73,13 +95,16 @@ def execute_checker(links):
 
 
 def main():
-    link_set = create_unique_links_set()
-    pool = ThreadPool(processes=4)
-    gl, bl = pool.apply(execute_checker, args=(link_set,))
-    # gl, bl = pool.apply_async(execute_checker, args=(link_set,))
+    q = queue.Queue()
 
-    pool.close()
-    pool.join()
+    # link_set = create_unique_links_set()
+    test_link_set = ('http://google.com', 'http://youtube.com', 'https://google.cox','https://shmoogled.net' )
+
+    # gl, bl = execute_checker_parallel(link_set)
+    # gl, bl = execute_checker_parallel(test_link_set)
+
+    gl, bl = execute_checker_non_parallel(test_link_set)
+    # gl, bl = execute_checker_non_parallel(link_set)
 
     print(f"{len(gl)} <---unique good links ,unique bad links --->{len(bl)}")
 
@@ -90,5 +115,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-"http://qaru.site/questions/37986/how-to-get-the-return-value-from-a-thread-in-python"
-" use celery"

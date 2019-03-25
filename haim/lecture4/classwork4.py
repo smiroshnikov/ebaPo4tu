@@ -15,11 +15,10 @@ def is_prime(n):
         return n
 
 
-#
-# numbers_list = [x for x in range(1, 100000)]
-# r_list = map(is_prime, numbers_list)
-# r_set = set
-# print(f"{[v for v in set(r_list) if isinstance(v, int)]} list \n total prime numbers ")
+numbers_list = [x for x in range(1, 12)]
+r_list = map(is_prime, numbers_list)
+r_set = set
+print(f"{[v for v in set(r_list) if isinstance(v, int)]} list \n total prime numbers ")
 
 
 def tuple_swap(t1):
@@ -42,10 +41,10 @@ def f(n):
 factorials = map(f, l)
 print([v for v in map(f, l)])
 
-firstnames = ["moshe", "dudu", "daniela"]
-lastnames = ["israeli", "michael", "darky"]
+first_names = ["moshe", "dudu", "daniela"]
+last_names = ["israeli", "michael", "darky"]
 
-full_names = zip(firstnames, lastnames)
+full_names = zip(first_names, last_names)
 
 for fn in full_names:
     print(fn)
@@ -66,7 +65,42 @@ students = [("name1", "family1", "121212", 80),
             ("name2", "family2", "1212312", 70),
             ("name3", "family3", "5545412", 90),
             ("name4", "family4", "7001212", 100)]
-
-list_of_averages = [student[3] for student in students if student[3] > 80x`]
-
+list_of_averages = [student[3] for student in students if student[3] > 80]
 print(list_of_averages)
+
+
+def diff(a, b): return a - b
+
+
+def sum(a, b): return a + b
+
+
+def mul(a, b): return a * b
+
+
+func_list = [diff, sum, mul]
+for f in func_list:
+    print(f"{f(21, 2)} amazing")
+avg = 90
+
+if avg < 10:
+    def calc(mark):
+        return mark + 20
+else:
+    def calc(mark):
+        return mark + 10
+
+marks1 = [70, 45, 90]
+marks2 = [calc(m) for m in marks1]  # actually will evaluate during runtime
+print(marks2)
+
+
+def avg(grade_list):
+    summ = 0
+    # sum += [v for v in grade_list] will not work due to LIST COMPREHENSION returning a LIST ! Always
+    for k, v in grade_list.items():
+        summ += grade_list.get(k)
+    return summ / 4
+
+
+print(avg({'c': 100, 'm': 90, 'p': 87, 'n': 17}))

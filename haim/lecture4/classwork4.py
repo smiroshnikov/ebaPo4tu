@@ -1,7 +1,7 @@
 def is_prime(n):
     # n = int(input("give me a number "))
     x = int(n / 2)
-    while x > 2:
+    while x > 1:
         if n % x == 0:
             print(f"{n} divides by {x}")
             prime_flag = False
@@ -15,9 +15,8 @@ def is_prime(n):
         return n
 
 
-numbers_list = [x for x in range(1, 12)]
+numbers_list = [x for x in range(1, 120)]
 r_list = map(is_prime, numbers_list)
-r_set = set
 print(f"{[v for v in set(r_list) if isinstance(v, int)]} list \n total prime numbers ")
 
 
@@ -104,3 +103,20 @@ def avg(grade_list):
 
 
 print(avg({'c': 100, 'm': 90, 'p': 87, 'n': 17}))
+
+
+def diff(a, b): return F"{a - b} this is diff!"
+
+
+def sum(a, b): return f"{a + b} this is sum!"
+
+
+def mul(a, b): return f"{a * b} this is mult!"
+
+
+func_list = [diff, sum, mul]
+for f in func_list:
+    print(f"{f(21, 2)} amazing")
+
+
+

@@ -3,7 +3,7 @@ lines = []
 with open('cities.csv', 'r') as f:
     for line in f:
         # fields = (line.split(','))
-        fields = (line)
+        fields = line
         # lines.append(f.readline())
         lines.append(fields)
 
@@ -17,6 +17,6 @@ class Foo:
     def __call__(self, *args, **kwargs):
         print("called")
 
-
+# example below - class called as a function
 foo_instance = Foo()
 foo_instance()

@@ -18,7 +18,7 @@ test = {(1.1, 1.0), (1.2, 2.3), (2, 3)}
 a = 3
 
 b = int('1a', base=16)  # int is a class, Question to Haim , what really happens here
-print(b)  # i have overridden int constructor's default vaue
+print(b)  # i have overridden int constructor's default value
 print(b.__str__())  # equivalent of toString() in Java ?
 
 

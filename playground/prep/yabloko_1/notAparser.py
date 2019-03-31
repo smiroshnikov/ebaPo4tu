@@ -7,7 +7,9 @@ def populate_list(filename, separator=","):
     try:
         with open(filename, 'r') as f:
             for line in f:
-                list_of_lines.append(line.replace('"', '').replace(' ', '').replace('\n', '').split(separator))
+                list_of_lines.append(line.replace('"', '')
+                                     .replace(' ', '').replace('\n', '')
+                                     .split(separator))
         return list_of_lines
     except FileNotFoundError as e:
         print(f"DUDE FILE IS MISSING{e} !")

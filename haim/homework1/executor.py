@@ -1,4 +1,4 @@
-from homework1.lib import multiply_2_numbers as m2n
+from haim.homework1.lib import multiply_2_numbers as m2n
 
 
 # import inspect

@@ -1,9 +1,24 @@
+import os
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pathlib import Path
 
-driver = webdriver.Chrome("E:\Development\ebaPo4tu\playground\pythonic stuff\chromewriver-win\chromedriver.exe")
+
+def create_valid_path():
+    current_path = Path(__file__)
+    driver_path = (current_path / "../chromedriver-win/chromedriver.exe").resolve()
+    if 'nt' in os.name:
+        return str(driver_path.absolute()).replace("\\", "/")
+    else:
+        return str(driver_path)
+
+
+p = create_valid_path()
+print(p)
+driver = webdriver.Chrome(p)
 
 driver.get("http://python.org")
 try:

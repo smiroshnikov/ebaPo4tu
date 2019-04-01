@@ -56,7 +56,7 @@ if __name__ == "__main__":
     # pool = multiprocessing.Pool(processes=int(len(scientists) / 4),
     #                             maxtasksperchild=1)  # I define to restart process once it is complete
 
-    result = pool.map(transform, scientists)
+    result = pool.t(transform, scientists)
     end = time.time()
     print(f'Time to complete: {end - start:.2f}')
     # pprint(result)

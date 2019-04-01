@@ -70,13 +70,13 @@ udp_header = ('80 01'
 
 
 # this function returns byte length of HEX representation without spaces
-def getByteLength(str1):
+def get_byte_length(str1):
     """Returns length in bytes """
     return len(''.join(str1.split())) / 2  # Q - WHY ? Answered above
 
 
 # This function creates binary file after ,pcap is created
-def writeByteStringToFile(bytestring, filename):
+def write_byte_string_to_file(bytestring, filename):
     bytelist = bytestring.split()  # HEX STR-> LIST
 
     bytes = binascii.a2b_hex(''.join(bytelist))  # LIST -> BINARY STR
@@ -87,19 +87,19 @@ def writeByteStringToFile(bytestring, filename):
     # Q - why file is not closed ?
 
 
-def generatePCAP(message, factor, asset_ip, port, pcapfile):
+def generate_pcap(message, factor, asset_ip, port, pcapfile):
     message *= factor
     print("len message: ", len(message))
     # %04x limiting string to 4 characters
     # udp = udp_header.replace('XX XX', "%04x" % port)
     udp = udp_header.replace('XX XX', "{}04x".format(port))
     # -Q why udp_len is in bytes ? A - value is required for checksum
-    udp_len = getByteLength(message) + getByteLength(udp_header)
+    udp_len = get_byte_length(message) + get_byte_length(udp_header)
 
     # udp = udp.replace('YY YY', "%04x" % udp_len)
     udp = udp.replace('YY YY', "{}04x".format(udp_len))
 
-    ip_len = udp_len + getByteLength(ip_header)
+    ip_len = udp_len + get_byte_length(ip_header)
     # ip = ip_header.replace('XX XX', "%04x" % ip_len)
     ip = ip_header.replace('XX XX', "{}04x".format(ip_len))
 
@@ -108,7 +108,7 @@ def generatePCAP(message, factor, asset_ip, port, pcapfile):
     # zfill (2) means add 0 before first digit if the representation result is shorter then 1 digits
 
     # B  "B"-"E" i should rewrite this to separate function
-    dest_asset = " ".join([hex(int(value))[2:].zfill(2) for value in asset_ip.split('.')])
+    # dest_asset = " ".join([hex(int(value))[2:].zfill(2) for value in asset_ip.split('.')])
     dest_asset = " ".join([hex(int(value))[2:].zfill(2) for value in asset_ip.split('.')])
 
     # same as above HEX representation of source ip
@@ -126,7 +126,7 @@ def generatePCAP(message, factor, asset_ip, port, pcapfile):
     # after checksum is calculated it is placed in header
     ip = ip.replace('YY YY', "%04x" % checksum)
 
-    pcap_len = ip_len + getByteLength(eth_header)  # total packet length that is required for checksums
+    pcap_len = ip_len + get_byte_length(eth_header)  # total packet length that is required for checksums
 
     hex_str = "%08x" % pcap_len
 
@@ -164,10 +164,10 @@ def generatePCAP(message, factor, asset_ip, port, pcapfile):
 
         if not os.path.exists(pcapfile):  # condition to create and write pcap header into file
             bytestring = pcap_global_header + current_pcap + eth_header + ip + udp + message  # total bytes to write into binary file
-            writeByteStringToFile(bytestring, pcapfile)
+            write_byte_string_to_file(bytestring, pcapfile)
 
         bytestring = current_pcap + eth_header + ip + udp + message  # condition to write other headers besides pcap into existing file
-        writeByteStringToFile(bytestring, pcapfile)
+        write_byte_string_to_file(bytestring, pcapfile)
 
 
 # functions below are required for checksum calculation
@@ -227,7 +227,7 @@ if __name__ == "__main__":
         if os.path.exists(PCAP_NAME):
             os.remove(PCAP_NAME)
 
-        generatePCAP(message, factor, asset, port, PCAP_NAME)
+        generate_pcap(message, factor, asset, port, PCAP_NAME)
 
         p = sub.Popen(
             ['softflowd', '-v', '5', '-r', 'pcap_file.pcap', '-n', '%s:%s' % (sdcc, netflow_port), '-T', 'full'],

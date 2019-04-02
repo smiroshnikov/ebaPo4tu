@@ -4,5 +4,5 @@
     <asm skipDebug="false" skipFrames="false" skipCode="false" expandFrames="false" />
     <groovy codeStyle="LEGACY" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.7 (ebaPo4tu)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="Python 3.7" project-jdk-type="Python SDK" />
 </project>

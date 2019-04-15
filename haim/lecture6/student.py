@@ -12,3 +12,7 @@ class Student:
     def give_money(self):
         if self.money - 1 > 1:
             return ("Student has no loan d")
+
+
+class scukoPythcharm(object):
+    pass

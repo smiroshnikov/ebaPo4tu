@@ -47,7 +47,7 @@ def gimme_dict_occur(words_list, k):
         return None
 
 
-w = ['hey', 'hey', 'hey', 'hey', 'my', 'name', 'name','momo','momo','name']
+w = ['hey', 'hey', 'hey', 'hey', 'my', 'name', 'name', 'momo', 'momo', 'name']
 print(gimme_dict_occur(w, 1))  # --> hey
 print(gimme_dict_occur(w, 2))  # --> name
 print(gimme_dict_occur(w, 3))  # --> my
@@ -59,3 +59,5 @@ k = 2 --> return d[last-1]
 k=  3 --> return d[last-2]
 
 """
+
+

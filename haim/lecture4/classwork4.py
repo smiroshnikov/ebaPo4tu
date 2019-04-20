@@ -15,7 +15,7 @@ def is_prime(n):
         return n
 
 
-numbers_list = [x for x in range(1, 120)]
+numbers_list = [x for x in range(1, 1700000)]
 r_list = map(is_prime, numbers_list)
 print(f"{[v for v in set(r_list) if isinstance(v, int)]} list \n total prime numbers ")
 

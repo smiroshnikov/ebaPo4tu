@@ -1,0 +1,6 @@
+AssertionError:
+[{'bbox': [331, 395, 793, 1877], 'label': 'person', 'prob': 0.9997}, {'bbox': [728, 408, 1090, 1895], 'label': 'person', 'prob': 0.9995}, {'bbox': [325, 404, 618, 1304], 'label': 'person', 'prob': 0.9515}]
+[{'bbox': [331, 395, 793, 1877], 'label': 'person', 'prob': 0.9997}, {'bbox': [728, 408, 1090, 1895], 'label': 'person', 'prob': 0.9995}, {'bbox': [325, 404, 618, 1304], 'label': 'person', 'prob': 0.9515}]
+DOES not match expected
+[{'bbox': [331, 395, 793, 1877], 'label': 'person', 'prob': 0.9997}, {'bbox': [728, 408, 1090, 1895], 'label': 'person', 'prob': 0.9995}, {'bbox': [325, 404, 618, 1304], 'label': 'person', 'prob': 0.9515}]
+!

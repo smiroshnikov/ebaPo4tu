@@ -1,0 +1,14 @@
+"""
+SCRIPT FLOW SHOULD BE LIKE THIS
+
+1. GET CHECKPOINT ID [V]
+2. GET TEST CASE LIST (TUPLE OF IMAGES)
+3. PER EACH TEST CASE CHECK EXECUTION TIME
+4. PER EACH TEST CASE CHECK COORDINATES MATCH
+5. PER EACH TEST CASE CHECK LABELS AND PROBABILITY
+6. GENERATE REPORT -> {"MODEL/CHECKPOINT_ID" : chk_id ,
+                        test : 'rainy_day.jpg' ,
+                        'detection' : 'passed',
+                        'execution' : 'failed'}
+
+"""

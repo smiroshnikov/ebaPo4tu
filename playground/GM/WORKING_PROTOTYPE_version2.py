@@ -2,6 +2,8 @@ import copy
 import datetime
 import operator
 import sys
+from luminoth import Detector, read_image as ri
+from termcolor import colored
 
 """
 SCRIPT FLOW SHOULD BE LIKE THIS 
@@ -70,9 +72,15 @@ RESULTS_LIST = (ACTUAL_RESULT_ALL_GOOD, ACTUAL_RESULT_BAD_TIME, ACTUAL_RESULT_BA
 # endregion
 
 
-def do_luminoth(checkpoint):
-    print(f"results for checkpoint ID <<{checkpoint}>>")
-    return ACTUAL_RESULT_ALL_GOOD
+def validate_perception(img, checkpoint_name):
+    d = Detector(checkpoint=checkpoint_name)
+    image = ri(img)
+    start = datetime.datetime.now()
+    p = d.predict(image)
+    end = datetime.datetime.now()
+    print(p)
+    execution_time = end - start
+    return {execution_time: p}
 
 
 def validate_execution_time(ar, er, tc):
@@ -86,13 +94,15 @@ def validate_execution_time(ar, er, tc):
     time_diff = list(ar.keys())[0] - list(er.keys())[0]
     try:
         assert list(er.keys())[0] >= list(ar.keys())[0], \
-            f"TEST_CASE runtime measurement  <<{tc}>> FAILED reason : slower runtime {time_diff} then previous runtime !"
+            colored(
+                f"TEST_CASE runtime measurement  <<{tc}>> FAILED reason : slower runtime {time_diff} then previous runtime !"
+                , 'red')
     except AssertionError as e:
         print(e)
         pass_flag = False
     else:
         pass_flag = True
-        print(f"TEST_CASE runtime measurement on dataset <<{tc}>> PASSED ")
+        print(colored(f"TEST_CASE runtime measurement on dataset <<{tc}>> PASSED ", 'green'))
 
     return {tc: ("validate_execution_time", pass_flag)}
 
@@ -161,13 +171,15 @@ def comparator(i1, i2, tc):
     """
     try:
         assert [e for e in i1 if e] == [v for v in i2], \
-            f"TEST_CASE <<{tc}>> FAILED reason ELEMENT VALIDATION\nelements in\n->{i1}\n do not match elements in \n->{i2}"
+            colored(
+                f"TEST_CASE <<{tc}>> FAILED reason ELEMENT VALIDATION\nelements in\n->{i1}\n do not match elements in \n->{i2}",
+                'red')
     except AssertionError as err:
         print(err)
         test_flag = False
     else:
         test_flag = True
-        print(f"TEST_CASE<<{tc}>> PASSED")
+        print(colored(f"TEST_CASE<<{tc}>> PASSED"), 'green')
     return {tc: test_flag}
 
 
@@ -184,11 +196,15 @@ def validate_values(ar, er, tc):
 
     if better_comparator(ar_bx_list, er_bx_list):
         if better_comparator(ar_lp, er_lp):
-            print(f"TEST_CASE value accuracy on dataset  <<{tc}>> PASSED labels and prob match! ")
+            pass_flag = True
+            print(colored(f"TEST_CASE value accuracy on dataset  <<{tc}>> PASSED labels and prob match! ", 'green'))
         else:
-            print(f"TEST_CASE value accuracy on dataset  <<{tc}>> FAILED  labels and prob DO NOT Match! ")
+            pass_flag = False
+            print(colored(f"TEST_CASE value accuracy on dataset  <<{tc}>> FAILED  labels and prob DO NOT Match! ",'red'))
     else:
+        pass_flag = False
         print(f"TEST_CASE value accuracy on dataset <<{tc}>> FAILED  box coordinates DO NOT Match! ")
+    return {tc: ("validate coordinated and labels", pass_flag)}
 
 
 if __name__ == '__main__':
@@ -200,3 +216,6 @@ if __name__ == '__main__':
             actual_result = r
             RM.append(validate_execution_time(actual_result, EXPECTED_RESULT, tc))
             RM.append(validate_values(actual_result, EXPECTED_RESULT, tc))
+
+    for i in RM:
+        print(i)

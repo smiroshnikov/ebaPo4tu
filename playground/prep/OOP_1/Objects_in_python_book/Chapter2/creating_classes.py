@@ -60,7 +60,7 @@ class PointV20:
         self.x = x
         self.y = y
 
-    def reset(self):
+    def retset(self):
         """
         resets back to origin
         :return:

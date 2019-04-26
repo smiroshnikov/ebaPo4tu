@@ -1,10 +1,11 @@
-# Patrt 1
+# Part 1
 import sys
 
 s = "abs__sd__sdqaea__weqw__"
 
 
 # Question remove _ frpm s
+# Question are strings mutable , NO string in python are immutable - a result is a pointer to a new object
 
 def rm(s):
     res = []

@@ -1,3 +1,7 @@
+"""
+the purpose of this is to use luminoth output as json abject
+"""
+
 import json
 
 # this should be in a file not in test code

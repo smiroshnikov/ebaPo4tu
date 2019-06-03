@@ -4,7 +4,7 @@ import operator
 import sys
 from time import sleep
 
-from luminoth import Detector, read_image as ri
+# from luminoth import Detector, read_image as ri
 from termcolor import colored
 
 """
@@ -147,7 +147,7 @@ def clean_and_separate(dictionary):
 
 def is_equal(i1, i2):
     """
-    method used to compare results beteween coordinates and labels in extected vs actual
+    method used to compare results between coordinates and labels in expected vs actual
     :param i1: list or dictionary
     :param i2:  list or dictionary
     :return: boolean as result
@@ -189,13 +189,13 @@ def validate_values(actual_results, expected_results, test_case):
 
 
 print(colored(f"RUNNING REAL IMAGE EXTRACTION WITH LUMINOTH !", 'red'))
-luminoth_output = extract_objects(BASIC_TESTS_SET[0], checkpoint_name)
+# luminoth_output = extract_objects(BASIC_TESTS_SET[0], checkpoint_name)
 
 # print(luminoth_output)
 # this is test run on REAL DATA
-validate_execution_time(luminoth_output, EXPECTED_RESULT_REAL, 'sunny_day_3_people.jpg')
-validate_values(luminoth_output, EXPECTED_RESULT_REAL, 'sunny_day_3_people.jpg')
-print(colored(f"EXECUTION ON REAL file is completed", 'red'))
+# validate_execution_time(luminoth_output, EXPECTED_RESULT_REAL, 'sunny_day_3_people.jpg')
+# validate_values(luminoth_output, EXPECTED_RESULT_REAL, 'sunny_day_3_people.jpg')
+# print(colored(f"EXECUTION ON REAL file is completed", 'red'))
 
 if __name__ == '__main__':
 

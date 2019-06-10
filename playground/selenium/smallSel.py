@@ -11,15 +11,18 @@ def create_valid_path():
     current_path = Path(__file__)
     driver_path = (current_path / "../chromedriver-win/chromedriver.exe").resolve()
     if 'nt' in os.name:
+        print(str(driver_path.absolute()).replace("\\", "/"))
         return str(driver_path.absolute()).replace("\\", "/")
     else:
         return str(driver_path)
+
 
 def initialize_driver():
     p = create_valid_path()
     print(p)
     driver = webdriver.Chrome(p)
     return driver
+
 
 if __name__ == '__main__':
     driver = initialize_driver()
@@ -33,10 +36,10 @@ if __name__ == '__main__':
         pass
     # driver.quit()
 
-# implicit vs explicit wait
-# implicit wait - waits before every call (pauses for a certain amount of time for every action
-# implicit can be used if a connection is slow / used once per session
-# explicit wait wait for a certain condition only
+    # implicit vs explicit wait
+    # implicit wait - waits before every call (pauses for a certain amount of time for every action
+    # implicit can be used if a connection is slow / used once per session
+    # explicit wait wait for a certain condition only
 
     driver.implicitly_wait(10)
     driver.get("http://python.org")

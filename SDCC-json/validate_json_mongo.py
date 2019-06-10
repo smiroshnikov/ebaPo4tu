@@ -9,4 +9,4 @@ with open("data-assetRoutes.json", 'r') as f:
     for o in objs:
         db.AssetRoutes.insert_one(o)
 
-print ("fuck ")
+print("fuck ")

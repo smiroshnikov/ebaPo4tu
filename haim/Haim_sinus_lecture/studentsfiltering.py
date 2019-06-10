@@ -63,6 +63,8 @@ def numbers2():
 for n in numbers2():
     print(n)
 
-# yield return GENERATOR objext - google up lazy evaluation
+# yield return GENERATOR object - google up lazy evaluation
 
 # Currying Functions
+
+lambda o: o

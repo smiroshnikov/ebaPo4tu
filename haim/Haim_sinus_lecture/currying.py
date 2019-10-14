@@ -26,3 +26,5 @@ class Yael:
 
 y = Yael("scuko")
 print(y.name)
+
+
